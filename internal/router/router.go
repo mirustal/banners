@@ -1,6 +1,7 @@
 package router
 
 import (
+	"banners_service/internal/handler"
 	"banners_service/internal/handler/auth"
 
 	"github.com/gofiber/fiber/v2"
@@ -14,4 +15,6 @@ func Init(app *fiber.App) {
 		router.Post("/login", auth.SignInUser)
 		router.Get("/logout", auth.DeserializeUser, auth.LogoutUser)
 	})
+	app.Post("/banner", auth.DeserializeUser, auth.RequireAdminRole, handler.BannerCreate)
+	app.Get("/banner", auth.DeserializeUser, auth.RequireAdminRole, handler.BannerGet)
 }

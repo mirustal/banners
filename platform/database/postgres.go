@@ -28,6 +28,13 @@ func ConnectDB(cfg *config.Config) {
 	if err != nil {
 		log.Fatal("Migration Failed:  \n", err.Error())
 	}
-
-
+	err = DB.AutoMigrate(&models.Banner{})
+	if err != nil {
+		log.Fatal("Migration Failed:  \n", err.Error())
+	}
 }
+
+
+
+
+

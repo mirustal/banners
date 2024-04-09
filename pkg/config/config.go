@@ -42,6 +42,9 @@ func GetConfig() (config *Config) {
 	}
 
 	err = viper.Unmarshal(&config)
+	if err != nil{
+		log.Fatal("config bad unmarshal %f", err)
+	}
 	return config
 }
 

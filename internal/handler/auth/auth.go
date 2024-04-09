@@ -6,6 +6,7 @@ import (
 	"banners_service/pkg/utils"
 	"banners_service/platform/database"
 	"fmt"
+	"log/slog"
 	"strings"
 	"time"
 
@@ -19,22 +20,21 @@ func SignUpUser(c *fiber.Ctx) error {
 
     
     if err := c.BodyParser(&payload); err != nil {
-        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "bad json",  "error": err.Error()})
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"description": "bad json",  "error": err.Error()})
     }
 
-    
     errors := models.ValidateStruct(&payload)
     if len(errors) > 0 { 
-        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "bad validate json", "errors": errors})
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"description": "bad validate json", "errors": errors})
     }
 
     if payload.Password != payload.PasswordConfirm {
-        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "Passwords do not match"})
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"description": "Passwords do not match"})
     }
 
     hashedPassword, err := bcrypt.GenerateFromPassword([]byte(payload.Password), bcrypt.DefaultCost)
     if err != nil {
-        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "fail", "message": "Failed to hash the password"})
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"description": "fail", "message": "Failed to hash the password"})
     }
 
 
@@ -49,10 +49,9 @@ func SignUpUser(c *fiber.Ctx) error {
     result := database.DB.Create(&newUser)
     if result.Error != nil {
         if strings.Contains(result.Error.Error(), "duplicate key value violates unique constraint") {
-            return c.Status(fiber.StatusConflict).JSON(fiber.Map{"status": "fail", "message": "User with that email already exists"})
+            return c.Status(fiber.StatusConflict).JSON(fiber.Map{"description": "fail", "message": "User with that email already exists"})
         }
- 
-        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"description": "error", "message": "Something bad happened"})
     }
 
 
@@ -60,7 +59,7 @@ func SignUpUser(c *fiber.Ctx) error {
     now := time.Now().UTC()
     tokenString, err := utils.JwtCreate(newUser)
     if err != nil {
-        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "fail", "message": "Create JWT"})
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"description": "fail", "message": "Create JWT"})
     }
     c.Cookie(&fiber.Cookie{
         Name:     "token",
@@ -69,7 +68,7 @@ func SignUpUser(c *fiber.Ctx) error {
         Secure:   false, 
     })
 
-    return c.Status(fiber.StatusCreated).JSON(fiber.Map{"token": tokenString, "status": "success", "data": fiber.Map{"user": models.FilterUserRecord(&newUser)}})
+    return c.Status(fiber.StatusCreated).JSON(fiber.Map{"token": tokenString, "description": "success", "data": fiber.Map{"user": models.FilterUserRecord(&newUser)}})
 }
 
 func SignInUser(c *fiber.Ctx) error {
@@ -77,40 +76,40 @@ func SignInUser(c *fiber.Ctx) error {
 
 
     if err := c.BodyParser(&payload); err != nil {
-        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"description": "fail", "message": err.Error()})
     }
 
 
     if errors := models.ValidateStruct(&payload); len(errors) > 0 { 
-        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "errors": errors})
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"description": "fail", "errors": errors})
     }
 
     var user models.User
     result := database.DB.Where("email = ?", strings.ToLower(payload.Email)).First(&user)
     if result.Error != nil {
-        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "Invalid email or password"})
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"description": "fail", "message": "Invalid email or password"})
     }
 
 
     if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(payload.Password)); err != nil {
-        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "Invalid email or password"})
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"description": "fail", "message": "Invalid email or password"})
     }
 
     config := config.GetConfig()
     now := time.Now().UTC()
     tokenString, err := utils.JwtCreate(user)
     if err != nil {
-        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "fail", "message": "Create JWT"})
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"description": "fail", "message": "Create JWT"})
     }
 
     c.Cookie(&fiber.Cookie{
         Name:     "token",
         Value:    tokenString,
-        Expires:  now.Add(time.Minute * time.Duration(config.JwtMaxAge)),
+        Expires:  now.Add(time.Hour * time.Duration(config.JwtMaxAge)),
         Secure:   false, 
     })
 
-    return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "token": tokenString})
+    return c.Status(fiber.StatusOK).JSON(fiber.Map{"description": "success", "token": tokenString})
 }
 
 
@@ -121,7 +120,7 @@ func LogoutUser(c *fiber.Ctx) error {
 		Value:   "",
 		Expires: expired,
 	})
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success"})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"description": "success"})
 }
 
 
@@ -130,15 +129,20 @@ func DeserializeUser(c *fiber.Ctx) error {
     var tokenString string
 
     authorization := c.Get("Authorization")
+    
 
-    if strings.HasPrefix(authorization, "Bearer ") {
-        tokenString = strings.TrimPrefix(authorization, "Bearer ")
-    } else {
-        tokenString = c.Cookies("token")
+	if strings.HasPrefix(authorization, "Bearer ") {
+		tokenString = strings.TrimPrefix(authorization, "Bearer ")
+	} else {
+		token := c.Get("token")
+		if token == "" {
+			token = c.Cookies("token")
+		}
+		tokenString = token
     }
 
     if tokenString == "" {
-        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "You are not logged in"})
+        return c.SendStatus(fiber.StatusUnauthorized)
     }
 
 
@@ -151,24 +155,26 @@ func DeserializeUser(c *fiber.Ctx) error {
         }
         return []byte(config.JwtSecret), nil
     })
+    
 
     if err != nil {
-        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": fmt.Sprintf("Invalid token: %v", err)})
+        slog.Error("Invalid token ", err)
+        return c.SendStatus(fiber.StatusUnauthorized)
     }
-
+    
     claims, ok := tokenByte.Claims.(jwt.MapClaims)
     if !ok || !tokenByte.Valid {
-        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "Invalid token claim"})
+        slog.Error("Invalid token claim")
+        return c.SendStatus(fiber.StatusUnauthorized)
     }
 
     var user models.User
    
-    userID := fmt.Sprintf("%v", claims["sub"]) // Преобразование ID пользователя из токена в строку (или в соответствующий тип)
+    userID := fmt.Sprintf("%v", claims["sub"]) 
     if result := database.DB.First(&user, "id = ?", userID); result.Error != nil {
-        return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "The user belonging to this token no longer exists"})
+        slog.Error("The user belonging to this token no longer exists")
+        return c.SendStatus(fiber.StatusUnauthorized)
     }
-
-   
     c.Locals("user", models.FilterUserRecord(&user))
 
     return c.Next()
@@ -177,7 +183,7 @@ func DeserializeUser(c *fiber.Ctx) error {
 func RequireAdminRole(c *fiber.Ctx) error {
     user, ok := c.Locals("user").(models.UserResponse) 
     if !ok || user.Role != "admin" {
-        return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "Access is denied"})
+        return c.SendStatus(fiber.StatusForbidden)
     }
     return c.Next()
 }

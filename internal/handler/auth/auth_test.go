@@ -16,7 +16,7 @@ import (
 
 
 
-func TestSignUpUser(t *testing.T) {
+func TestAuth(t *testing.T) {
 
 	type args struct {
 		userData    models.SignUpInput
