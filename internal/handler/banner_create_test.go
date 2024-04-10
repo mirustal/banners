@@ -18,17 +18,18 @@ func TestBannerCreate(t *testing.T) {
 
 	testRequest := "/banner"
 	userData :=  models.SignUpInput{ 
-		Email:           "test@example@mail.ru",
+		Email:           "test4@example@mail.ru",
 		Name:            "avito",
 		Password:        "123456789",
 		PasswordConfirm: "123456789",
+		Role: "admin",
 	}
 
 	app := fiber.New()
 	database.ConnectDB(config.GetConfig())
 	app.Post("/auth/register", auth.SignUpUser)
 	app.Post("/auth/login", auth.SignInUser)
-	app.Post(testRequest, Banner)
+	app.Post(testRequest, auth.DeserializeUser, auth.RequireAdminRole, BannerCreate)
 
 	marshalUser, err := json.Marshal(userData)
 	if err != nil {
@@ -57,7 +58,7 @@ func TestBannerCreate(t *testing.T) {
 		{
 			name: "banner create 201",
 			data: models.Banner{
-				TagIDs:    []int{1, 2, 3},
+				TagIDs:    []int64{1, 2, 3},
 				FeatureID: 123,
 				Content:    map[string]string{"title": "some_title", "text": "some_text", "url": "some_url"},
 				IsActive:  true,

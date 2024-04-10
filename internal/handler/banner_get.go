@@ -7,7 +7,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 )
-
+	
 func BannerGet(c *fiber.Ctx) error {
     featureID := c.Query("feature_id")
     tagID := c.Query("tag_id")

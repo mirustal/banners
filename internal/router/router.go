@@ -18,4 +18,6 @@ func Init(app *fiber.App) {
 	app.Post("/banner", auth.DeserializeUser, auth.RequireAdminRole, handler.BannerCreate)
 	app.Get("/banner", auth.DeserializeUser, auth.RequireAdminRole, handler.BannerGet)
 	app.Delete("/banner/:id", auth.DeserializeUser, auth.RequireAdminRole, handler.BannerDel)
+	app.Get("/user_banner", auth.DeserializeUser, handler.UserBannersGet)
+	app.Patch("/banner/:id", auth.DeserializeUser, auth.RequireAdminRole, handler.BannerUpdate)	
 }
