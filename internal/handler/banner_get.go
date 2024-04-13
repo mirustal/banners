@@ -3,7 +3,8 @@ package handler
 import (
 	"banners_service/internal/models"
 	"banners_service/platform/database"
-
+	"strconv"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -30,6 +31,10 @@ func BannerGet(c *fiber.Ctx) error {
     result := query.Find(&banners)
     if result.Error != nil {
         return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": result.Error.Error()})
+    }
+
+    for _, banner  := range banners {
+        c.Locals("cache:" + strconv.Itoa(banner.ID), banner, time.Duration(time.Minute * 5))
     }
 
 	if len(banners) < 1  {

@@ -12,6 +12,7 @@ import (
 )
 
 var DB *gorm.DB
+
 func ConnectDB(cfg *config.Config) {
 	var err error
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC", 
@@ -21,7 +22,7 @@ func ConnectDB(cfg *config.Config) {
 		Logger: logger.Default.LogMode(logger.Info), 
 	})
 	if err != nil {
-		log.Fatalf("Failed to connect to the Database! %s\n", err.Error())
+		log.Fatalf("Failed to connect to the db%s\n", err.Error())
 	}
 	DB.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"")
 	err = DB.AutoMigrate(&models.User{})
@@ -32,6 +33,7 @@ func ConnectDB(cfg *config.Config) {
 	if err != nil {
 		log.Fatal("Migration Failed:  \n", err.Error())
 	}
+	// InitTestData()
 }
 
 

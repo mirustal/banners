@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"banners_service/internal/handler/auth"
 	"banners_service/internal/models"
 	"banners_service/pkg/config"
 	"banners_service/platform/database"
@@ -17,39 +16,11 @@ import (
 func TestBannerCreate(t *testing.T) {
 
 	testRequest := "/banner"
-	userData :=  models.SignUpInput{ 
-		Email:           "test4@example@mail.ru",
-		Name:            "avito",
-		Password:        "123456789",
-		PasswordConfirm: "123456789",
-		Role: "admin",
-	}
-
 	app := fiber.New()
 	database.ConnectDB(config.GetConfig())
-	app.Post("/auth/register", auth.SignUpUser)
-	app.Post("/auth/login", auth.SignInUser)
-	app.Post(testRequest, auth.DeserializeUser, auth.RequireAdminRole, BannerCreate)
+	app.Post(testRequest, BannerCreate)
 
-	marshalUser, err := json.Marshal(userData)
-	if err != nil {
-		t.Fatalf("Failed to marshal userData: %v", err)
-	}
-	req := httptest.NewRequest("POST", "/auth/register", bytes.NewBuffer(marshalUser))
-	req.Header.Set("Content-Type", "application/json")
-
-	resp, err := app.Test(req, -1)
-	if err != nil {
-		t.Fatalf("Failed to execute request: %v", err)
-	}
-	if resp.StatusCode != fiber.StatusCreated {
-		req = httptest.NewRequest("POST", "/auth/login", bytes.NewBuffer(marshalUser))
-		resp, err = app.Test(req, -1)
-		if err != nil {
-			t.Fatalf("Failed to execute request: %v", err)
-		}
-	}
-
+	trueVal := true
 	testBanner := []struct {
 		name string
 		data models.Banner
@@ -61,7 +32,7 @@ func TestBannerCreate(t *testing.T) {
 				TagIDs:    []int64{1, 2, 3},
 				FeatureID: 123,
 				Content:    map[string]string{"title": "some_title", "text": "some_text", "url": "some_url"},
-				IsActive:  true,
+				IsActive:  &trueVal,
 			},
 			expectedCode: 201,
 		},

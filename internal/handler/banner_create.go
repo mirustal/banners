@@ -12,7 +12,6 @@ import (
 func BannerCreate(c *fiber.Ctx) error {
 	var response models.CreateBannerDTO
 
-    
     if err := c.BodyParser(&response); err != nil {
         return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
     }
