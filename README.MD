@@ -40,14 +40,14 @@ role может быть "admin" и "user", в случае если поле у
 Все остальное API не изменено.
 
 ### Примеры использования api
-1. Зарегистрируем нового пользователя 
+1. Зарегистрируем нового пользователя с правами администратора
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210452.png)
-2. Создаем новый баннер ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210810.png)
+2. Создаем новый баннер ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210810.png), который будет активный для всех пользователей, в случае если параметр is_active был бы false, тогда пользователь с правами user не смог получить бы к нему доступ
 3. Получим баннер для пользователя, если параметр use_last_revision true, мы будем брать информацию о баннере напрямую из базы данных в ином случае мы получим ее и запишем в кеш 
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210938.png)
 4. Обновим ранее созданный баннер 
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414211424.png)
-5. Получим весь список баннеров 
+5. Получим весь список баннеров, так же можно получить баннер по фиче или тегу
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414211038.png)
 6. Удалим баннер c id = 1 
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212158.png)
@@ -55,6 +55,7 @@ role может быть "admin" и "user", в случае если поле у
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212233.png)
 8. Выполним выход из сессии 
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212351.png)
+
 # Запуск 
 	make start - полный запуск
 	make build - сборка Docker образа
