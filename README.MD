@@ -38,14 +38,21 @@ role может быть "admin" и "user", в случае если поле у
 Все остальное API не изменено.
 
 ### Примеры использования api
-1. Зарегистрируем нового пользователя ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210452.png)
+1. Зарегистрируем нового пользователя 
+![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210452.png)
 2. Создаем новый баннер ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210810.png)
-3. Получим баннер для пользователя, если параметр use_last_revision true, мы будем брать информацию о баннере напрямую из базы данных в ином случае мы получим ее и запишем в кеш  ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210938.png)
-4. Обновим ранее созданный баннер ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414211424.png)
-5. Получим весь список баннеров ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted/image/20240414211038.png)
-6. Удалим баннер c id = 1 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212158.png)
-7. Проверим весь список  баннеров ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212233.png)
-8. Выполним выход из сессии ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212351.png)
+3. Получим баннер для пользователя, если параметр use_last_revision true, мы будем брать информацию о баннере напрямую из базы данных в ином случае мы получим ее и запишем в кеш 
+![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210938.png)
+4. Обновим ранее созданный баннер 
+![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414211424.png)
+5. Получим весь список баннеров 
+![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted/image/20240414211038.png)
+6. Удалим баннер c id = 1 
+![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212158.png)
+7. Проверим весь список  баннеров 
+![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212233.png)
+8. Выполним выход из сессии 
+![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212351.png)
 # Запуск 
 	make start - полный запуск
 	make build - сборка Docker образа
