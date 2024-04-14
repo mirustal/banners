@@ -1,0 +1,3428 @@
+{
+	"info": {
+		"_postman_id": "b041c2d1-f7c4-42fa-bfeb-e26b718bdb5f",
+		"name": "Сервис баннеров",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33643587"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"item": [
+						{
+							"name": "Регистрация нового admin пользователя",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful admin registration returns status 201 and a token\", function() {",
+											"    pm.response.to.have.status(201);",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('token');",
+											"    pm.expect(jsonData.token).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Successful user registration returns status 201 and a token\", function() {",
+											"    pm.response.to.have.status(201);",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('token');",
+											"    pm.expect(jsonData.token).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"var jsonData = pm.response.json();",
+											"    pm.environment.set(\"token\", jsonData.token);",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"admin\",\n  \"email\": \"admin\",\n  \"password\": \"123456789\",\n  \"passwordConfirm\": \"123456789\",\n  \"role\": \"admin\"\n}\n",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Пользователь успешно создан",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								},
+								{
+									"name": "Неверный запрос",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Пользователь с таким email уже существует",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Внутренняя ошибка сервера",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "bad json",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"pm.test(\"Registration with missing  returns status 400\", function() {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"admin\",\n  \"password\": \"123456789\",\n  \"passwordConfirm\": \"123456789\",\n  \"role\": \"admin\"\n}\n",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Пользователь успешно создан",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								},
+								{
+									"name": "Неверный запрос",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Пользователь с таким email уже существует",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Внутренняя ошибка сервера",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "repeater email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Registration with an existing email returns status 409\", function() {",
+											"    pm.response.to.have.status(409);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"admin\",\n  \"email\": \"admin\",\n  \"password\": \"123456789\",\n  \"passwordConfirm\": \"123456789\",\n  \"role\": \"admin\"\n}\n",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Пользователь успешно создан",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								},
+								{
+									"name": "Неверный запрос",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Пользователь с таким email уже существует",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Внутренняя ошибка сервера",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"passwordConfirm\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "Авторизация пользователя",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful login should return status 200 and a token\", function() {",
+											"    pm.response.to.have.status(200);",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('token');",
+											"    pm.expect(jsonData.token).to.be.a('string');",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"    pm.environment.set(\"token\", jsonData.token);",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"admin\",\n  \"password\": \"123456789\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Успешный вход в систему",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								},
+								{
+									"name": "Неверный запрос",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Неверный email или пароль",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Внутренняя ошибка сервера",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "bad pass",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Invalid login should return status 401\", function() {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"admin\",\n  \"password\": \"wrond pass\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Успешный вход в систему",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								},
+								{
+									"name": "Неверный запрос",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Неверный email или пароль",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Внутренняя ошибка сервера",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "bad json",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"request should return status 400\", function() {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"admin\",\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Успешный вход в систему",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								},
+								{
+									"name": "Неверный запрос",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Неверный email или пароль",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Внутренняя ошибка сервера",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"item": [
+						{
+							"name": "Выход пользователя из системы",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Logout should return status 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/logout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Успешный выход из системы",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/logout",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"logout"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Внутренняя ошибка сервера",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/logout",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"logout"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response must have a token\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.token).to.be.a('string');",
+							"});",
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "user_banner",
+			"item": [
+				{
+					"name": "Получение баннера для пользователя",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful retrieval should return status 200 and banner data\", function() {",
+									"    pm.response.to.have.status(200);",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title');",
+									"    pm.expect(jsonData).to.have.property('text');",
+									"    pm.expect(jsonData).to.have.property('url');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Токен пользователя",
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user_banner?tag_id=1&feature_id=5&use_last_revision=false",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user_banner"
+							],
+							"query": [
+								{
+									"key": "tag_id",
+									"value": "1",
+									"description": "1"
+								},
+								{
+									"key": "feature_id",
+									"value": "5",
+									"description": "5"
+								},
+								{
+									"key": "use_last_revision",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Баннер пользователя",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"anim_53\": -2937504.7512418777,\n  \"mollit_a\": -27946806.286724433,\n  \"enim_c\": -42238655.649853565\n}"
+						},
+						{
+							"name": "Некорректные данные",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": \"<string>\"\n}"
+						},
+						{
+							"name": "Пользователь не авторизован",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Пользователь не имеет доступа",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Баннер для не найден",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Внутренняя ошибка сервера",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Non-existent banner should return status 404\", function() {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Токен пользователя",
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user_banner?tag_id=1&feature_id=2&use_last_revision=false",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user_banner"
+							],
+							"query": [
+								{
+									"key": "tag_id",
+									"value": "1",
+									"description": "(Required) "
+								},
+								{
+									"key": "feature_id",
+									"value": "2",
+									"description": "(Required) "
+								},
+								{
+									"key": "use_last_revision",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Баннер пользователя",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"anim_53\": -2937504.7512418777,\n  \"mollit_a\": -27946806.286724433,\n  \"enim_c\": -42238655.649853565\n}"
+						},
+						{
+							"name": "Некорректные данные",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": \"<string>\"\n}"
+						},
+						{
+							"name": "Пользователь не авторизован",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Пользователь не имеет доступа",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Баннер для не найден",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Внутренняя ошибка сервера",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен пользователя",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user_banner?tag_id=<integer>&feature_id=<integer>&use_last_revision=false",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user_banner"
+									],
+									"query": [
+										{
+											"key": "tag_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "feature_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										},
+										{
+											"key": "use_last_revision",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": \"<string>\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "banner",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Обновление содержимого баннера",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful update should return status 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tag_ids\": [2, 5],\n    \"feature_id\": 8,\n    \"content\": {\"text\": \"check\", \"url\": \"some_url\"},\n    \"is_active\": false\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/banner/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"ute98\": \"aute ut\"\n  },\n  \"is_active\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Некорректные данные",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"ute98\": \"aute ut\"\n  },\n  \"is_active\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"error\": \"<string>\"\n}"
+								},
+								{
+									"name": "Пользователь не авторизован",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"ute98\": \"aute ut\"\n  },\n  \"is_active\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Пользователь не имеет доступа",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"ute98\": \"aute ut\"\n  },\n  \"is_active\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Баннер не найден",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"ute98\": \"aute ut\"\n  },\n  \"is_active\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Внутренняя ошибка сервера",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"ute98\": \"aute ut\"\n  },\n  \"is_active\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"error\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Удаление баннера по идентификатору",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/banner/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Баннер успешно удален",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Некорректные данные",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"error\": \"<string>\"\n}"
+								},
+								{
+									"name": "Пользователь не авторизован",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Пользователь не имеет доступа",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Баннер для тэга не найден",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Внутренняя ошибка сервера",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Токен админа",
+												"key": "token",
+												"value": "<string>"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/banner/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"banner",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"error\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Получение всех баннеров c фильтрацией по фиче и/или тегу",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful response should return status 201 and an array of banners\", function() {",
+									"    pm.response.to.have.status(201);",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"",
+									"",
+									"    if (jsonData.length > 0) {",
+									"        var firstBanner = jsonData[1];",
+									"",
+									"        pm.expect(firstBanner).to.have.property('banner_id');",
+									"",
+									"        pm.environment.set(\"banner_id\", firstBanner.banner_id);",
+									"        ",
+									"",
+									"        pm.expect(firstBanner).to.have.property('tag_ids').that.is.an('array');",
+									"        pm.expect(firstBanner).to.have.property('feature_id');",
+									"        pm.expect(firstBanner).to.have.property('content');",
+									"        pm.expect(firstBanner).to.have.property('is_active').that.is.a('boolean');",
+									"        pm.expect(firstBanner).to.have.property('created_at');",
+									"        pm.expect(firstBanner).to.have.property('updated_at');",
+									"    } else {",
+									"        console.log(\"Response array is empty, cannot set banner_id.\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Токен админа",
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/banner?feature_id=5&tag_id=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"banner"
+							],
+							"query": [
+								{
+									"key": "feature_id",
+									"value": "5",
+									"description": "1"
+								},
+								{
+									"key": "tag_id",
+									"value": "1",
+									"description": "5"
+								},
+								{
+									"key": "limit",
+									"value": "<integer>",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "<integer>",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/banner?feature_id=<integer>&tag_id=<integer>&limit=<integer>&offset=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner"
+									],
+									"query": [
+										{
+											"key": "feature_id",
+											"value": "<integer>"
+										},
+										{
+											"key": "tag_id",
+											"value": "<integer>"
+										},
+										{
+											"key": "limit",
+											"value": "<integer>"
+										},
+										{
+											"key": "offset",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"banner_id\": \"<integer>\",\n    \"tag_ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"feature_id\": \"<integer>\",\n    \"content\": {\n      \"incididunt85\": -97668181.39488555\n    },\n    \"is_active\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\"\n  },\n  {\n    \"banner_id\": \"<integer>\",\n    \"tag_ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"feature_id\": \"<integer>\",\n    \"content\": {\n      \"ad__6\": -33964439,\n      \"elit__\": -20566837.77165644,\n      \"laborum_d00\": \"ut magna\"\n    },\n    \"is_active\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\"\n  }\n]"
+						},
+						{
+							"name": "Пользователь не авторизован",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/banner?feature_id=<integer>&tag_id=<integer>&limit=<integer>&offset=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner"
+									],
+									"query": [
+										{
+											"key": "feature_id",
+											"value": "<integer>"
+										},
+										{
+											"key": "tag_id",
+											"value": "<integer>"
+										},
+										{
+											"key": "limit",
+											"value": "<integer>"
+										},
+										{
+											"key": "offset",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Пользователь не имеет доступа",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/banner?feature_id=<integer>&tag_id=<integer>&limit=<integer>&offset=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner"
+									],
+									"query": [
+										{
+											"key": "feature_id",
+											"value": "<integer>"
+										},
+										{
+											"key": "tag_id",
+											"value": "<integer>"
+										},
+										{
+											"key": "limit",
+											"value": "<integer>"
+										},
+										{
+											"key": "offset",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Внутренняя ошибка сервера",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/banner?feature_id=<integer>&tag_id=<integer>&limit=<integer>&offset=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner"
+									],
+									"query": [
+										{
+											"key": "feature_id",
+											"value": "<integer>"
+										},
+										{
+											"key": "tag_id",
+											"value": "<integer>"
+										},
+										{
+											"key": "limit",
+											"value": "<integer>"
+										},
+										{
+											"key": "offset",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Создание нового баннера",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful banner creation should return status 201 and banner ID\", function() {",
+									"    pm.response.to.have.status(201);",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('banner_id');",
+									"    pm.expect(jsonData.banner_id).to.be.a('number');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Токен админа",
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tag_ids\": [\n      1,\n      5,\n      2\n    ],\n    \"feature_id\": 5,\n    \"content\": {\n      \"text\": \"some_text\",\n      \"title\": \"some_title\",\n      \"url\": \"some_url\"\n    },\n    \"is_active\": true\n  }",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/banner",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"banner"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"aliquip649\": true\n  },\n  \"is_active\": \"<boolean>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/banner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"banner_id\": \"<integer>\"\n}"
+						},
+						{
+							"name": "Некорректные данные",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"aliquip649\": true\n  },\n  \"is_active\": \"<boolean>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/banner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": \"<string>\"\n}"
+						},
+						{
+							"name": "Пользователь не авторизован",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"aliquip649\": true\n  },\n  \"is_active\": \"<boolean>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/banner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Пользователь не имеет доступа",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"aliquip649\": true\n  },\n  \"is_active\": \"<boolean>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/banner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Внутренняя ошибка сервера",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Токен админа",
+										"key": "token",
+										"value": "<string>"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tag_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"feature_id\": \"<integer>\",\n  \"content\": {\n    \"aliquip649\": true\n  },\n  \"is_active\": \"<boolean>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/banner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"banner"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": \"<string>\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:8000"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "banner_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

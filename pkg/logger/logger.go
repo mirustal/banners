@@ -10,8 +10,6 @@ type Logger struct {
 	Logger *slog.Logger
 }
 
-
-
 func SetupLogger(modeLog string) *Logger {
 	var handler slog.Handler
 
@@ -33,10 +31,9 @@ func SetupLogger(modeLog string) *Logger {
 	return logger
 }
 
-
 func Err(err error) slog.Attr {
 	return slog.Attr{
-		Key: "error",
+		Key:   "error",
 		Value: slog.StringValue(err.Error()),
 	}
 }

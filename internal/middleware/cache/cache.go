@@ -10,19 +10,19 @@ import (
 )
 
 type allCache struct {
-    Data *cache.Cache
+	Data *cache.Cache
 }
 
 const (
-    defaultExpiration = 5 * time.Minute
-    purgeTime         = 5 * time.Minute
+	defaultExpiration = 5 * time.Minute
+	purgeTime         = 5 * time.Minute
 )
 
 func newCache() *allCache {
-    Cache := cache.New(defaultExpiration, purgeTime)
-    return &allCache{
-        Data: Cache,
-    }
+	Cache := cache.New(defaultExpiration, purgeTime)
+	return &allCache{
+		Data: Cache,
+	}
 }
 
 func (cach *allCache) Read(c *fiber.Ctx) error {
@@ -33,18 +33,18 @@ func (cach *allCache) Read(c *fiber.Ctx) error {
 	tagID := c.QueryInt("tag_id")
 	featureID := c.QueryInt("feature_id")
 
-    banner, ok :=  CacheData.Data.Get(strconv.Itoa(tagID) + " " + strconv.Itoa(featureID))
+	banner, ok := CacheData.Data.Get(strconv.Itoa(tagID) + " " + strconv.Itoa(featureID))
 	bannerContent, ok := banner.(models.Banner)
 	if ok {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"example": bannerContent.Content,
-	})
-    }
-    return c.Next()
+		})
+	}
+	return c.Next()
 }
 
 func (c *allCache) Update(id string, data models.Banner) {
-    c.Data.Set(id, data, cache.DefaultExpiration)
+	c.Data.Set(id, data, cache.DefaultExpiration)
 }
 
 var CacheData = newCache()

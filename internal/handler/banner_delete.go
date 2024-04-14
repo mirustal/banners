@@ -1,7 +1,6 @@
 package handler
 
 import (
-
 	"banners_service/internal/models"
 	"banners_service/platform/database"
 	"fmt"
@@ -21,7 +20,7 @@ func BannerDel(c *fiber.Ctx) error {
 	}
 
 	result := database.DB.Delete(&models.Banner{}, bannerIDInt)
-    if result.Error != nil {
+	if result.Error != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": result.Error.Error(),
 		})
@@ -33,4 +32,3 @@ func BannerDel(c *fiber.Ctx) error {
 
 	return c.SendStatus(fiber.StatusNoContent)
 }
-

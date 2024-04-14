@@ -3,6 +3,101 @@ info:
   title: Сервис баннеров
   version: 1.0.0
 paths:
+  /auth/register:
+    post:
+      summary: Регистрация нового пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+                - passwordConfirm
+                - role
+              properties:
+                name:
+                  type: string
+                  description: Имя пользователя
+                email:
+                  type: string
+                  format: email
+                  description: Электронная почта пользователя
+                password:
+                  type: string
+                  description: Пароль
+                passwordConfirm:
+                  type: string
+                  description: Подтверждение пароля
+                role:
+                  type: string
+                  description: Роль пользователя
+      responses:
+        '201':
+          description: Пользователь успешно создан
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT токен пользователя
+        '400':
+          description: Неверный запрос
+        '409':
+          description: Пользователь с таким email уже существует
+        '500':
+          description: Внутренняя ошибка сервера
+  /auth/login:
+    post:
+      summary: Авторизация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Электронная почта пользователя
+                password:
+                  type: string
+                  description: Пароль
+      responses:
+        '200':
+          description: Успешный вход в систему
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT токен пользователя
+        '400':
+          description: Неверный запрос
+        '401':
+          description: Неверный email или пароль
+        '500':
+          description: Внутренняя ошибка сервера
+          
+  /auth/logout:
+    get:
+      summary: Выход пользователя из системы
+      responses:
+        '200':
+          description: Успешный выход из системы
+        '500':
+          description: Внутренняя ошибка сервера
   /user_banner:
     get:
       summary: Получение баннера для пользователя

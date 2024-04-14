@@ -30,7 +30,7 @@ type UserResponse struct {
 
 type CreateBannerDTO struct {
 	TagIDs    []int64           `json:"tag_ids"`
-	FeatureID int             `json:"feature_id"`
+	FeatureID int               `json:"feature_id"`
 	Content   map[string]string `json:"content"`
-	IsActive  *bool              `json:"is_active"`
+	IsActive  *bool             `json:"is_active"`
 }
