@@ -3,6 +3,7 @@
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414204013.png)
 Примеры запросов в api/bannerify.postman_collection.json
 ссылка на api
+
 https://app.swaggerhub.com/apis/guresq/banners/1.0.0
 
 ## Authorization  
