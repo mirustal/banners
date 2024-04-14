@@ -1,6 +1,6 @@
 # Обновленное API
-![[Pasted image 20240414204013.png]]
 
+![alt text](https://github.com/mirustal/banners/edit/develop/image/Pasted image 20240414204013.png)
 Примеры запросов в api/bannerify.postman_collection.json
 
 
