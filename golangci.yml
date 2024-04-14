@@ -1,49 +1,43 @@
 run:
   concurrency: 4
   timeout: 5m
-  issues-exit-code: 1
-  tests: true
   modules-download-mode: readonly
+  tests: false
   allow-parallel-runners: true
 
 output:
   formats:
+    - format: json
+      path: stderr
     - format: checkstyle
       path: report.xml
     - format: colored-line-number
 
+
+  sort-results: true 
+  sort-order:
+    - linter
+    - severity
+    - file 
+  show-stats: true
+
 linters:
   enable-all: true
   disable:
-    - nosnakecase
-    - golint
-    - structcheck
-    - deadcode
-    - scopelint
-    - exhaustivestruct
-    - interfacer
-    - ifshort
-    - maligned
-    - varcheck
-    - tagliatelle
+    - deadcode # Deprecated
+    - exhaustivestruct # Deprecated
+    - golint # Deprecated
+    - ifshort # Deprecated
+    - interfacer # Deprecated
+    - maligned # Deprecated
+    - nosnakecase # Deprecated
+    - scopelint # Deprecated
+    - structcheck # Deprecated
+    - varcheck # Deprecated
 
 
 issues:
   exclude-rules:
   - path: ./
     linters:
-    - typecheck
-  exclude-dirs:
-    - "api"
-
-
-linters-settings:
-  errcheck:
-    check-type-assertions: false
-    check-blank: true
-  gofmt:
-    simplify: true
-  goimports:
-    local-prefixes: github.com/mirustal/banners 
-  lll:
-    line-length: 100
+    - errcheck

@@ -1,27 +1,5 @@
-APP_NAME=banners_service
-DB_CONTAINER=postgres
-
-PROJECT_DIR = $(shell pwd)
-PROJECT_BIN = $(PROJECT_DIR)/bin
-$(shell mkdir -p $(PROJECT_BIN))
-PATH := $(PROJECT_BIN):$(PATH)
-
-GOLANGCI_LINT = $(PROJECT_BIN)/golangci-lint
-
-.PHONY: .install-linter
-.install-linter:
-	@if [ ! -f $(GOLANGCI_LINT) ]; then \
-		curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(PROJECT_BIN) v1.46.2; \
-	fi
-
-.PHONY: lint
-lint: .install-linter
-	$(GOLANGCI_LINT) run --config=../golangci.yml  
-
-.PHONY: lint-fast
-lint-fast: .install-linter
-	$(GOLANGCI_LINT) run ./... --fast --config=.golangci.yml
-
+lint: 
+	golangci-lint run --config=./golangci.yml  
 
 
 all: build
