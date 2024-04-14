@@ -42,12 +42,14 @@ role может быть "admin" и "user", в случае если поле у
 ### Примеры использования api
 1. Зарегистрируем нового пользователя с правами администратора
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210452.png)
-2. Создаем новый баннер ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210810.png), который будет активный для всех пользователей, в случае если параметр is_active был бы false, тогда пользователь с правами user не смог получить бы к нему доступ
+2. Создаем новый баннер ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210810.png) 
+
+Баннер будет активный для всех пользователей, в случае если параметр is_active был бы false, тогда пользователь с правами user не смог получить бы к нему доступ
 3. Получим баннер для пользователя, если параметр use_last_revision true, мы будем брать информацию о баннере напрямую из базы данных в ином случае мы получим ее и запишем в кеш 
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414210938.png)
-4. Обновим ранее созданный баннер 
+4. Обновим ранее созданный баннер, обновлять можно вписывая любые поля описанные в api, так же в БД хранится дата создание и обновления баннера 
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414211424.png)
-5. Получим весь список баннеров, так же можно получить баннер по фиче или тегу
+5. Получим весь список баннеров, так же можно получить баннеры по фиче или тегу или указать offset и limit для баннеров 
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414211038.png)
 6. Удалим баннер c id = 1 
 ![alt text](https://github.com/mirustal/banners/blob/develop/image/Pasted_image_20240414212158.png)
