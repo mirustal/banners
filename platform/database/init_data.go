@@ -1,12 +1,14 @@
 package database
 
 import (
-    "banners_service/internal/models"
-    "log"
-    "golang.org/x/crypto/bcrypt"
+	"banners_service/internal/models"
+	"log"
+
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
-func InitTestData() {
+func InitTestData(DB *gorm.DB) {
     users := []models.User{
         {
             Name:     "admin",

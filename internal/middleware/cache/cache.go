@@ -34,9 +34,10 @@ func (cach *allCache) Read(c *fiber.Ctx) error {
 	featureID := c.QueryInt("feature_id")
 
     banner, ok :=  CacheData.Data.Get(strconv.Itoa(tagID) + " " + strconv.Itoa(featureID))
-    if ok {
+	bannerContent, ok := banner.(models.Banner)
+	if ok {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
-			"example": banner.Content,
+			"example": bannerContent.Content,
 	})
     }
     return c.Next()

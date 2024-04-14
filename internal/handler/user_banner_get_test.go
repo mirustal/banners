@@ -20,28 +20,38 @@ func TestUserBannerGet(t *testing.T) {
 testRequest := "/user_banner"
 
 app := fiber.New()
-database.ConnectDB(config.GetConfig())
+cfg := config.GetConfig()
+database.ConnectTestDB(cfg)
+
+defer func() {
+    database.DB.Exec("DROP DATABASE IF EXISTS %d", cfg.TestDBName)
+}()
+
+
 app.Get(testRequest, cache.CacheData.Read, UserBannersGet)
 
 testBanner := []struct {
 	name string
 	query string
 	expectedCode int
-	expectedFeature int
+	expectedContent map[string]interface{}
 }{
 	{
 		name:			"Filter by feature_id = 1",
 		query:         "?tag_id=1&feature_id=1",
 		expectedCode:  fiber.StatusOK,
-		expectedFeature: 1,
+		expectedContent: map[string]interface{}{
+			"test": "first feature",
+		},
 	},
 	{
 		name:          "Filter by feature_id = 2",
-		query:         "??tag_id=1&feature_id=2",
+		query:         "?tag_id=1&feature_id=2",
 		expectedCode:  fiber.StatusOK,
-		expectedFeature: 2,
+		expectedContent: map[string]interface{}{
+			"test": "second feature",
+		},
 	},
-
 }
 
 for _, tt := range testBanner {
@@ -60,7 +70,6 @@ for _, tt := range testBanner {
 		}
 	
 
-		assert.Equal(t, tt.expectedFeature, banner.FeatureID, banner)
-	}
+		assert.Equal(t, tt.expectedContent["test"], banner.Content["test"])	}
 }
 }
