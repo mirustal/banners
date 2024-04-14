@@ -63,6 +63,5 @@ role может быть "admin" и "user", в случае если поле у
 	make logs - вывод логов приложения
 ## Линтер
 	make lint
-	make lint
 
 
